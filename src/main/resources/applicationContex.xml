@@ -1,19 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans  xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:util="http://www.springframework.org/schema/util"
         xmlns:context="http://www.springframework.org/schema/context"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
 
+        <context:property-placeholder location="classpath:musicPlayer.properties"/>
 <!--    <bean id="testBean"-->
 <!--          class="jp.vadim.springcorepr.TestBean">-->
 <!--        <constructor-arg value="Neil"/>-->
 <!--    </bean>-->
 
-        <bean id="musicBean"
+        <bean id="myList" class="java.util.Arrays" factory-method="asList">
+            <constructor-arg value="#{'${musicPlayer.musicList}'.split(',')}"/>
+        </bean>
+
+        <bean id="musicBeanRock"
               class="jp.vadim.springcorepr.RockMusic">
+        </bean>
+        <bean id="musicBeanPop"
+              class="jp.vadim.springcorepr.PopMusic">
+        </bean>
+        <bean id="musicBeanClassic"
+              class="jp.vadim.springcorepr.ClassicMusic">
+        </bean>
+<!--        Dependensy injection-->
+        <bean id="musicPlayer"
+                class = "jp.vadim.springcorepr.MusicPlayer">
+<!--      Dependency Injection      <constructor-arg ref="musicBean"/>-->
+                <property name="music" ref="musicBeanRock"/>
+
+<!-- Injection variables       <property name="name" value="Some name"/>-->
+<!--                <property name="volume" value="50"/>-->
+                <property name="name" value="${musicPlayer.name}"/>
+                <property name="volume" value="${musicPlayer.volume}"/>
+                <property name="musicList" ref="myList"/>
         </bean>
 
 </beans>
