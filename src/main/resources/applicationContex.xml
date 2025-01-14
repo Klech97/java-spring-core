@@ -29,8 +29,10 @@
         </bean>
 <!--        Dependensy injection-->
         <bean id="musicPlayer"
-                class = "jp.vadim.springcorepr.MusicPlayer">
+                class = "jp.vadim.springcorepr.MusicPlayer"
+                scope="prototype">
 <!--      Dependency Injection      <constructor-arg ref="musicBean"/>-->
+
                 <property name="music" ref="musicBeanRock"/>
 
 <!-- Injection variables       <property name="name" value="Some name"/>-->
